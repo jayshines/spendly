@@ -1,0 +1,100 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg: 247 246 243;
+  --surface: 255 255 255;
+  --surface-2: 243 242 238;
+  --line: 232 230 225;
+  --fg: 24 24 22;
+  --muted: 113 113 107;
+  --faint: 160 160 153;
+  --accent: 22 163 74;
+  --accent-fg: 255 255 255;
+  color-scheme: light;
+}
+
+.dark {
+  --bg: 12 12 11;
+  --surface: 22 22 20;
+  --surface-2: 32 32 29;
+  --line: 44 44 40;
+  --fg: 244 244 240;
+  --muted: 163 163 155;
+  --faint: 115 115 108;
+  --accent: 74 222 128;
+  --accent-fg: 5 46 22;
+  color-scheme: dark;
+}
+
+@layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body {
+    @apply bg-bg font-sans text-fg;
+  }
+
+  ::selection {
+    background: rgb(var(--accent) / 0.25);
+  }
+
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: rgb(var(--line)) transparent;
+  }
+}
+
+@layer components {
+  .label {
+    @apply text-[11px] font-semibold uppercase tracking-[0.1em] text-faint;
+  }
+
+  .num {
+    font-variant-numeric: tabular-nums;
+  }
+
+  .focus-ring {
+    @apply outline-none focus-visible:ring-2 focus-visible:ring-accent/50;
+  }
+
+  /* Hide the scrollbar on horizontally scrolling pill rows */
+  .no-scrollbar {
+    scrollbar-width: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* Skeleton shimmer */
+.skeleton {
+  position: relative;
+  overflow: hidden;
+  background: rgb(var(--surface-2));
+}
+.skeleton::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgb(var(--surface) / 0.7),
+    transparent
+  );
+  animation: shimmer 1.4s infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
